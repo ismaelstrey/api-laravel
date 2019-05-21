@@ -1,49 +1,20 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Http\Controllers\MasterApiController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 
-class ClienteApiController extends Controller
+
+class ClienteApiController extends MasterApiController
 {
+    protected $model;
+    protected $path = 'clientes';
+    protected $upload = 'image';
 
-    public function __construct(Cliente $cliente, Request $request)
+    public function __construct(Cliente $clientes, Request $request)
     {
-        $this->cliente = $cliente;
+        $this->model = $clientes;
         $this->request = $request;
-    }
-    public function index()
-    {
-        $data = $this->cliente->all();
-        return response()->json($data);
-    }
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->cliente->rules());
-        $dataForm = $request->all();
-        $data = $this->cliente->create($dataForm);
-        return response()->json($data, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    public function destroy($id)
-    {
-        //
     }
 }

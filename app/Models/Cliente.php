@@ -16,7 +16,6 @@ class Cliente extends Model
     {
         return [
             'name' => 'required',
-            'image' => 'image',
             'cpf_cnpj' => 'required|unique:clientes'
         ];
     }
