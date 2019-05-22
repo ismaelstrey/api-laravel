@@ -72,8 +72,6 @@ class MasterApiController extends BaseController
                 Storage::disk('public')->delete("/{$this->path}/{$arquivo}");
             }
 
-
-
             $extension = $request->file($this->upload)->extension();
             $name = uniqid(date('His'));
             $nameFile = "{$name}.{$extension}";
@@ -89,7 +87,7 @@ class MasterApiController extends BaseController
         $data->update($dataForm);
         return response()->json($data);
     }
-
+// ------------------------------------------DESTROY-----------------------------------------------
     public function destroy($id)
     {
         if ($data = $this->model->find($id)) {
