@@ -27,13 +27,13 @@ class MasterApiController extends BaseController
         $this->validate($request, $this->model->rules());
         $dataForm = $request->all();
 
-        if ($request->hasFile('image') && $request->file($this->upload)->isValid()) {
+        if ($request->hasFile($this->upload) && $request->file($this->upload)->isValid()) {
 
             $extension = $request->file($this->upload)->extension();
 
             $name = uniqid(date('His'));
             $nameFile = "{$name}.{$extension}";
-            $upload = Image::make($dataForm[$this->upload])->resize(177, 236)->save(storage_path("clientes/$nameFile", 70));
+            $upload = Image::make($dataForm["$this->upload"])->resize(177, 236)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
 
             if (!$upload) {
 
@@ -59,25 +59,27 @@ class MasterApiController extends BaseController
     {
         $data = $this->model->find($id);
         if (!$data)
-            return response()->json(['error' => 'Nada foi encontrado'], 404);
-        if ($data->image) {
-            Storage::disk('public')->delete("/clientes/$data->image");
-        }
+            return response()->json(['error' => 'Nada foi encontrado para atualizar'], 404);
 
-
-        $this->validate($request, $this->model->rules());
+        // $this->validate($request, $this->model->rules());
         $dataForm = $request->all();
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        if ($request->hasFile($this->upload) && $request->file($this->upload)->isValid()) {
 
-            $extension = $request->file('image')->extension();
+            $arquivo = $this->model->arquivo($id);
 
+            if ($arquivo) {
+                Storage::disk('public')->delete("/{$this->path}/{$arquivo}");
+            }
+
+
+
+            $extension = $request->file($this->upload)->extension();
             $name = uniqid(date('His'));
             $nameFile = "{$name}.{$extension}";
-            $upload = Image::make($dataForm['image'])->resize(177, 236)->save(storage_path("clientes/$nameFile", 70));
+            $upload = Image::make($dataForm["$this->upload"])->resize(177, 236)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
 
             if (!$upload) {
-
                 return response()->json(['error' => 'Falha ao fazer o upload'], 500);
             } else {
                 $dataForm['image'] = $nameFile;
@@ -90,17 +92,16 @@ class MasterApiController extends BaseController
 
     public function destroy($id)
     {
-
-        $data = $this->model->find($id);
-        if (!$data)
+        if ($data = $this->model->find($id)) {
+            if ($this->model->arquivo($id)) {
+                $arquivo = $this->model->arquivo($id);
+                Storage::disk('images')->delete("$arquivo");
+            }
+            $msg['dados']  = ['dados' => 'Dados deletado com sucesso'];
+            $data->delete();
+            return response()->json([$msg], 404);
+        } else {
             return response()->json(['error' => 'Nada foi encontrado'], 404);
-        if ($data->image) {
-            Storage::disk('public')->delete("/clientes/$data->image");
-            $msg['img'] = ['imagem' => 'Imagem deletada com sucesso'];
         }
-        $msg = ['teste' => 'Dados deletado com sucesso'];
-        $msg['dados']  = ['dados' => 'Dados deletado com sucesso'];
-        $data->delete();
-        return response()->json([$msg], 404);
     }
 }
