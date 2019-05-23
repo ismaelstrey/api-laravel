@@ -15,6 +15,8 @@ class CreateFilmesTable extends Migration
     {
         Schema::create('filmes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('titulo', 150)->comment('Título do filme');
+            $table->string('capa', 100)->nullable()->comment('Campo da foto, tipo imagem');
             $table->timestamps();
         });
     }

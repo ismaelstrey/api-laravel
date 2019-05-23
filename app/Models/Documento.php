@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cliente;
-class Telefone extends Model
+
+class Documento extends Model
 {
     protected $fillable = [
         'cliente_id',
-        'numero'
+        'cpf_cnpj'
     ];
 
     public function rules()
     {
         return [
-            'cliente_id' => 'required|unique:documentos',
-            'numero' => 'required'
+            'cpf_cnpj' => 'required|unique:documentos'
         ];
     }
 

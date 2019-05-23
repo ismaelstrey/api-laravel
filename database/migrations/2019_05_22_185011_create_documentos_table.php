@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTelefonesTable extends Migration
+class CreateDocumentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTelefonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('telefones', function (Blueprint $table) {
+        Schema::create('documentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('numero', 20);
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('cpf_cnpj', 19)->unique()->comment('Cpf ou CNPJ do Cliente');
             $table->timestamps();
         });
     }
@@ -29,10 +29,10 @@ class CreateTelefonesTable extends Migration
      */
     public function down()
     {
-
-        Schema::table('telefones', function (Blueprint $table) {
+        Schema::table('documentos', function (Blueprint $table) {
             $table->dropForeign(['cliente_id']);
-            $table->dropIfExists('telefones');
+            $table->dropIfExists('documentos');
+
         });
     }
 }

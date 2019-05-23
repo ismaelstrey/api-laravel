@@ -17,7 +17,6 @@ class CreateClientesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 150)->comment('Nome do cliente');
             $table->string('image', 100)->nullable()->comment('Campo de foto tipo imagem');
-            $table->string('cpf_cnpj', 19)->unique()->comment('CPF ou CNPJ do cliente');
             $table->timestamps();
         });
     }

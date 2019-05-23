@@ -16,8 +16,7 @@ class ClienteSeederPupula extends Seeder
         $faker = Faker::create();
         foreach(range(1,30) as $i){
             Cliente::create([
-                'name' => $faker->name(),
-                'cpf_cnpj' => $faker->isbn10()
+                'name' => $faker->name()
             ]);
         }
 

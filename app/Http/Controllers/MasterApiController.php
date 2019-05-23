@@ -33,7 +33,7 @@ class MasterApiController extends BaseController
 
             $name = uniqid(date('His'));
             $nameFile = "{$name}.{$extension}";
-            $upload = Image::make($dataForm["$this->upload"])->resize(177, 236)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
+            $upload = Image::make($dataForm["$this->upload"])->resize($this->width, $this->height)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
 
             if (!$upload) {
 
@@ -75,7 +75,7 @@ class MasterApiController extends BaseController
             $extension = $request->file($this->upload)->extension();
             $name = uniqid(date('His'));
             $nameFile = "{$name}.{$extension}";
-            $upload = Image::make($dataForm["$this->upload"])->resize(177, 236)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
+            $upload = Image::make($dataForm["$this->upload"])->resize($this->width, $this->height)->save(storage_path("app/public/{$this->path}/{$nameFile}", 70));
 
             if (!$upload) {
                 return response()->json(['error' => 'Falha ao fazer o upload'], 500);
@@ -93,7 +93,7 @@ class MasterApiController extends BaseController
         if ($data = $this->model->find($id)) {
             if ($this->model->arquivo($id)) {
                 $arquivo = $this->model->arquivo($id);
-                Storage::disk('images')->delete("$arquivo");
+                Storage::disk('public')->delete("{$this->path}/{$arquivo}");
             }
             $msg['dados']  = ['dados' => 'Dados deletado com sucesso'];
             $data->delete();
