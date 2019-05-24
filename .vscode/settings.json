@@ -3,5 +3,8 @@
         "cliente",
         "pupula",
         "seeder"
+    ],
+    "cSpell.ignoreWords": [
+        "tymon"
     ]
 }

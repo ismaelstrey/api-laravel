@@ -19,9 +19,10 @@ class MasterApiController extends BaseController
 
     public function index()
     {
-        $data = $this->model->all();
+        $data = $this->model->all(10);
         return response()->json($data);
     }
+
     public function store(Request $request)
     {
         $this->validate($request, $this->model->rules());
