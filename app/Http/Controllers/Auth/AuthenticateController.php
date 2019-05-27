@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class AuthenticateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['authenticate']]);
+    }
     // ______________________________________________________________________________________________________________
     public function authenticate(Request $request)
     {
@@ -56,7 +60,6 @@ class AuthenticateController extends Controller
 
         try {
             $token = JWTAuth::refresh();
-
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json(['token_invalid'], $e->getStatusCode());
         }
