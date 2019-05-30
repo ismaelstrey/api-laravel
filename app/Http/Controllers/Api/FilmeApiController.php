@@ -12,6 +12,7 @@ class FilmeApiController extends MasterApiController
     protected $model;
     protected $path = 'filmes';
     protected $upload = 'capa';
+    protected $totalPage = 20;
     protected $width = 800;
     protected $height = 533;
 

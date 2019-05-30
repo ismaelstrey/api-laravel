@@ -19,7 +19,12 @@ class MasterApiController extends BaseController
 
     public function index()
     {
-        $data = $this->model->all(10);
+        if(isset($this->totalPagina)){
+            $data = $this->model->all($this->totalPagina);
+        }else{
+            $data = $this->model->all();
+        }
+
         return response()->json($data);
     }
 

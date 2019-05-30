@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class AuthenticateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['authenticate']]);
+    }
     // ______________________________________________________________________________________________________________
     public function authenticate(Request $request)
     {

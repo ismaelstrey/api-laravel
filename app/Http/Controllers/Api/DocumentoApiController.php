@@ -9,7 +9,6 @@ use App\Models\Documento;
 class DocumentoApiController extends MasterApiController
 {
     protected $model;
-
     protected $path;
     protected $upload;
 
